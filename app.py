@@ -3,35 +3,41 @@ import argparse
 
 
 arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument('-u', '--user', required=False, nargs='+')
+arg_parser.add_argument('-u', '--user', help='Filter specific user(s) by UID', required=False, nargs='+')
+arg_parser.add_argument('-d', '--delimiter', help='Define custom delimiter',required=False, default=',')
 
 args = arg_parser.parse_args()
 
 summary = {}
 
 with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
-    reader = csv.DictReader(transactions_file)
+    try:
+        reader = csv.DictReader(transactions_file)
 
-    for row in reader:
-        uid_val = row['uid']
+        for row in reader:
+            uid_val = row['uid']
 
-        if args.user and uid_val not in args.user:
-            continue
+            if args.user and uid_val not in args.user:
+                continue
 
-        amount_val = float(row['amount'])
+            amount_val = float(row['amount'])
 
-        if uid_val not in summary:
-            summary[uid_val] = {'total_amount': 0.0, 'transaction_count': 0}
+            if uid_val not in summary:
+                summary[uid_val] = {'total_amount': 0.0, 'transaction_count': 0}
 
-        summary[uid_val]['total_amount'] += amount_val
-        summary[uid_val]['transaction_count'] += 1
+            summary[uid_val]['total_amount'] += amount_val
+            summary[uid_val]['transaction_count'] += 1
 
-        if not summary:
-            print(f"No data found for user '{uid_val}'")
+    except FileNotFoundError:
+        print("Error: The file does not exist")
+
+    if not summary:
+        print(f"No data found for user '{uid_val}'")
 
     with open('summary.csv', mode='w', newline='',encoding='utf-8') as result:
         fieldnames = ['uid', 'total_amount', 'transaction_count']
-        writer = csv.DictWriter(result, fieldnames=fieldnames)
+        writer = csv.DictWriter(result, fieldnames=fieldnames, delimiter=args.delimiter)
+
         writer.writeheader()
 
         for uid, stats in summary.items():
