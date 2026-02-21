@@ -1,5 +1,11 @@
 import csv
+import argparse
 
+
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('-u', '--user', required=False)
+
+args = arg_parser.parse_args()
 
 summary = {}
 
@@ -8,6 +14,10 @@ with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
 
     for row in reader:
         uid_val = row['uid']
+
+        if args.user and uid_val != args.user:
+            continue
+
         amount_val = float(row['amount'])
 
         if uid_val not in summary:
@@ -15,6 +25,9 @@ with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
 
         summary[uid_val]['total_amount'] += amount_val
         summary[uid_val]['transaction_count'] += 1
+
+        if not summary:
+            print(f"No data found for user '{uid_val}'")
 
     with open('summary.csv', mode='w', newline='',encoding='utf-8') as result:
         fieldnames = ['uid', 'total_amount', 'transaction_count']

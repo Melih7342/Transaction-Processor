@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b73d682b-13a6-4b0c-813b-e485a0e70dbf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/transactions.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
@@ -94,11 +93,14 @@
       <workItem from="1771613875314" duration="1162000" />
       <workItem from="1771615063331" duration="642000" />
       <workItem from="1771616733795" duration="634000" />
-      <workItem from="1771676243373" duration="837000" />
+      <workItem from="1771676243373" duration="1892000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Transaction_Processor$app.coverage" NAME="app Coverage Results" MODIFIED="1771677789657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
