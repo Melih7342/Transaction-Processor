@@ -1,19 +1,25 @@
 import csv
 import argparse
-
+import os
 
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('-u', '--user', help='Filter specific user(s) by UID', required=False, nargs='+')
 arg_parser.add_argument('-d', '--delimiter', help='Define custom delimiter',required=False, default=',')
 arg_parser.add_argument('-w', '--withdraw', help='Filter only withdrawing transactions', action='store_true' ,required=False)
 arg_parser.add_argument('-dp', '--deposit', help='Filter only deposit transactions', action='store_true' ,required=False)
+arg_parser.add_argument('-i', '--input', help="Provide an input CSV-file", required=True)
+arg_parser.add_argument('-o', '--output', help="Provide an output filename", required=False, default='summary.csv')
 
 
 args = arg_parser.parse_args()
 
 summary = {}
 
-with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
+if not os.path.exists(args.input):
+    print(f"Error: The file '{args.input}' was not found")
+    exit(1)
+
+with open(args.input, mode='r', encoding='utf-8') as transactions_file:
     try:
         reader = csv.DictReader(transactions_file)
 
@@ -41,7 +47,7 @@ with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
     if not summary:
         print(f"No data found for user '{uid_val}'")
 
-    with open('summary.csv', mode='w', newline='',encoding='utf-8') as result:
+    with open(args.output, mode='w', newline='',encoding='utf-8') as result:
         fieldnames = ['uid', 'total_amount', 'transaction_count']
         writer = csv.DictWriter(result, fieldnames=fieldnames, delimiter=args.delimiter)
 
@@ -55,3 +61,5 @@ with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
                     'transaction_count': summary[uid]['transaction_count']
                 }
             )
+
+        print(f"Done! Results saved in {args.output}")
