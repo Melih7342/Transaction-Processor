@@ -3,7 +3,7 @@ import argparse
 
 
 arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument('-u', '--user', required=False)
+arg_parser.add_argument('-u', '--user', required=False, nargs='+')
 
 args = arg_parser.parse_args()
 
@@ -15,7 +15,7 @@ with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
     for row in reader:
         uid_val = row['uid']
 
-        if args.user and uid_val != args.user:
+        if args.user and uid_val not in args.user:
             continue
 
         amount_val = float(row['amount'])
