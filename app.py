@@ -5,6 +5,9 @@ import argparse
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('-u', '--user', help='Filter specific user(s) by UID', required=False, nargs='+')
 arg_parser.add_argument('-d', '--delimiter', help='Define custom delimiter',required=False, default=',')
+arg_parser.add_argument('-w', '--withdraw', help='Filter only withdrawing transactions', action='store_true' ,required=False)
+arg_parser.add_argument('-dp', '--deposit', help='Filter only deposit transactions', action='store_true' ,required=False)
+
 
 args = arg_parser.parse_args()
 
@@ -16,8 +19,12 @@ with open('transactions.csv', mode='r', encoding='utf-8') as transactions_file:
 
         for row in reader:
             uid_val = row['uid']
+            transaction_type = row['type']
 
             if args.user and uid_val not in args.user:
+                continue
+
+            if args.withdraw and transaction_type != 'w' or args.deposit and transaction_type != 'd' :
                 continue
 
             amount_val = float(row['amount'])
