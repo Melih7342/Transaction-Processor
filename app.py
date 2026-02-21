@@ -9,6 +9,7 @@ arg_parser.add_argument('-w', '--withdraw', help='Filter only withdrawing transa
 arg_parser.add_argument('-dp', '--deposit', help='Filter only deposit transactions', action='store_true' ,required=False)
 arg_parser.add_argument('-i', '--input', help="Provide an input CSV-file", required=True)
 arg_parser.add_argument('-o', '--output', help="Provide an output filename", required=False, default='summary.csv')
+arg_parser.add_argument('-v', '--verbose', help='Verbose output', required=False)
 
 
 args = arg_parser.parse_args()
@@ -21,7 +22,13 @@ if not os.path.exists(args.input):
 
 with open(args.input, mode='r', encoding='utf-8') as transactions_file:
     try:
+        if args.verbose:
+            print("Setting up the reader...")
+
         reader = csv.DictReader(transactions_file)
+
+        if args.verbose:
+            print(f"Reading the file '{args.input}'...")
 
         for row in reader:
             uid_val = row['uid']
@@ -49,9 +56,18 @@ with open(args.input, mode='r', encoding='utf-8') as transactions_file:
 
     with open(args.output, mode='w', newline='',encoding='utf-8') as result:
         fieldnames = ['uid', 'total_amount', 'transaction_count']
+
+        if args.verbose:
+            print("Setting up the writer...")
         writer = csv.DictWriter(result, fieldnames=fieldnames, delimiter=args.delimiter)
 
+        if args.verbose:
+            print(f"Writing the header for the file '{args.output}'...")
+
         writer.writeheader()
+
+        if args.verbose:
+            print(f"Writing summary into '{args.output}'...")
 
         for uid, stats in summary.items():
             writer.writerow(
@@ -62,4 +78,5 @@ with open(args.input, mode='r', encoding='utf-8') as transactions_file:
                 }
             )
 
-        print(f"Done! Results saved in {args.output}")
+        if args.verbose:
+            print(f"Done! Results saved in {args.output}")
