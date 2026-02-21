@@ -1,0 +1,28 @@
+# --- Python Basics ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+
+# --- CSV & Data ---
+*.csv
+
+
+# --- Editors & IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
