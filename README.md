@@ -18,7 +18,7 @@ In this project, I refreshed my Python skills by practicing CSV handling and bui
 
  2. **Install dependencies:**
    ```bash
-   pip install requests python-dotenv
+   pip install -r requirements.txt
 ```
 
  3. **Install dependencies:**

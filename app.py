@@ -1,6 +1,6 @@
 from save_to_csv import write_summary
 from argparsing import parse_args
-from aggregation import aggregate
+from aggregate_logic import aggregate
 
 def main():
     args = parse_args()
