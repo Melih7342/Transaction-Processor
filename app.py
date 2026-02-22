@@ -1,6 +1,7 @@
 import csv
 import argparse
 import os
+from dotenv import load_dotenv
 
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('-u', '--user', help='Filter specific user(s) by UID', required=False, nargs='+')
@@ -10,9 +11,14 @@ arg_parser.add_argument('-dp', '--deposit', help='Filter only deposit transactio
 arg_parser.add_argument('-i', '--input', help="Provide an input CSV-file", required=True)
 arg_parser.add_argument('-o', '--output', help="Provide an output filename", required=False, default='summary.csv')
 arg_parser.add_argument('-v', '--verbose', help='Verbose output', required=False)
+arg_parser.add_argument('-c', '--currency', help='Filter transactions by currency', required=False, default='USD')
 
 
 args = arg_parser.parse_args()
+
+load_dotenv()
+api_key = os.getenv('API_KEY')
+
 
 summary = {}
 
@@ -43,9 +49,16 @@ with open(args.input, mode='r', encoding='utf-8') as transactions_file:
             amount_val = float(row['amount'])
 
             if uid_val not in summary:
-                summary[uid_val] = {'total_amount': 0.0, 'transaction_count': 0}
+                summary[uid_val] = {'total_amount_withdraw': 0.0, 'total_amount_deposit': 0.0, 'transaction_count': 0}
 
-            summary[uid_val]['total_amount'] += amount_val
+            if transaction_type == 'd':
+                summary[uid_val]['total_amount_deposit'] += amount_val
+            elif transaction_type == 'w':
+                summary[uid_val]['total_amount_withdraw'] += amount_val
+            else:
+                print(f"Invalid transaction type '{transaction_type}'")
+                print("Should be 'd' for 'deposit' or 'w' for 'withdraw'")
+
             summary[uid_val]['transaction_count'] += 1
 
     except FileNotFoundError:
@@ -55,7 +68,7 @@ with open(args.input, mode='r', encoding='utf-8') as transactions_file:
         print(f"No data found for user '{uid_val}'")
 
     with open(args.output, mode='w', newline='',encoding='utf-8') as result:
-        fieldnames = ['uid', 'total_amount', 'transaction_count']
+        fieldnames = ['uid', 'total_amount_withdraw', 'total_amount_deposit', 'transaction_count']
 
         if args.verbose:
             print("Setting up the writer...")
@@ -73,7 +86,8 @@ with open(args.input, mode='r', encoding='utf-8') as transactions_file:
             writer.writerow(
                 {
                     'uid': uid,
-                    'total_amount': summary[uid]['total_amount'],
+                    'total_amount_withdraw': summary[uid]['total_amount_withdraw'],
+                    'total_amount_deposit': summary[uid]['total_amount_deposit'],
                     'transaction_count': summary[uid]['transaction_count']
                 }
             )

@@ -12,6 +12,7 @@ dist/
 
 # --- CSV & Data ---
 *.csv
+.env
 
 
 # --- Editors & IDEs ---
