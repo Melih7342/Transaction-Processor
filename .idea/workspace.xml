@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b73d682b-13a6-4b0c-813b-e485a0e70dbf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/aggregation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/argparsing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/currencies.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/save_to_csv.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transactions.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +107,7 @@
       <workItem from="1771676243373" duration="5436000" />
       <workItem from="1771690482817" duration="52000" />
       <workItem from="1771697026253" duration="2163000" />
-      <workItem from="1771753079050" duration="4458000" />
+      <workItem from="1771753079050" duration="6701000" />
     </task>
     <servers />
   </component>

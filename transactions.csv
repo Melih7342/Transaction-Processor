@@ -1,9 +1,0 @@
-tid,uid,amount,currency,type
-1,101,50.0,EUR,d
-2,102,25.0,USD,w
-3,101,15.5,EUR,d
-4,103,100.0,GBP,d
-5,102,10.0,CHF,w
-6,101,5.0,EUR,w
-7,103,20.0,USD,d
-8,104,45.0,GBP,d
